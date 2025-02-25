@@ -1,6 +1,5 @@
 // src/context/CartContext.tsx
-import React from "react";
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 interface CartItem {
   id: number;
@@ -22,8 +21,12 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
-  
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const [total, setTotal] = useState(0); // ✅ total 상태를 별도로 관리
+
+  // ✅ cart 변경될 때 total 자동 업데이트
+  useEffect(() => {
+    setTotal(cart.reduce((sum, item) => sum + item.price * item.quantity, 0));
+  }, [cart]);
 
   const addItem = (item: CartItem) => {
     setCart((prev) => {
@@ -41,7 +44,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     setCart((prev) =>
       prev
         .map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity + delta } : item
+          item.id === id ? { ...item, quantity: Math.max(0, item.quantity + delta) } : item
         )
         .filter((item) => item.quantity > 0)
     );
@@ -52,7 +55,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const clearCart = () => {
-    setCart([]);
+    console.log("🛒 장바구니 초기화됨!");
+    setCart([]); // ✅ 상태를 빈 배열로 설정
+    setTotal(0); // ✅ total 값도 초기화
   };
 
   return (
