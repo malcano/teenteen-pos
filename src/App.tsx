@@ -50,7 +50,7 @@ import ResetModal from "./components/ResetModal"; // ✅ 추가
 const App = () => {
   const [isCheckoutOpen, setCheckoutOpen] = useState(false);
   const [isResetOpen, setResetOpen] = useState(false); // ✅ 초기화 모달 상태 추가
-  const { clearCart } = useCart();
+  const { clearCart, total } = useCart();
 
   return (
     <>
@@ -75,8 +75,9 @@ const App = () => {
       {/* 체크아웃 모달 */}
       <CheckoutModal
         isOpen={isCheckoutOpen}
-        onConfirm={() => {
-          console.log("결제 완료!");
+        total={total} // ✅ total 전달 (오류 해결)
+        onConfirm={(paymentMethod) => {
+          console.log(`결제 완료! 선택된 결제 방법: ${paymentMethod}`);
           clearCart();
           setCheckoutOpen(false);
         }}
