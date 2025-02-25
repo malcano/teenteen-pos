@@ -1,43 +1,3 @@
-// // src/App.tsx
-// import { useState } from "react";
-// import { useCart } from "./context/CartContext"; // ✅ useCart만 가져오기
-// import Header from "./components/Header";
-// import Cart from "./components/Cart";
-// import ProductGrid from "./components/ProductGrid";
-// import CheckoutModal from "./components/CheckoutModal";
-
-// const App = () => {
-//   const [isCheckoutOpen, setCheckoutOpen] = useState(false);
-//   const { clearCart } = useCart(); // ✅ 이제 안전하게 사용 가능!
-
-//   return (
-//     <>
-//       <Header />
-//       <Cart />
-//       <ProductGrid 
-//         onReset={() => {
-//           console.log("초기화 실행!"); // ✅ 디버깅 로그
-//           clearCart(); 
-//         }} 
-//         onCheckout={() => setCheckoutOpen(true)} 
-//       />
-      
-//       {/* 체크아웃 모달 */}
-//       <CheckoutModal
-//         isOpen={isCheckoutOpen}
-//         onConfirm={() => {
-//           console.log("결제 완료!");
-//           clearCart();
-//           setCheckoutOpen(false);
-//         }}
-//         onClose={() => setCheckoutOpen(false)}
-//       />
-//     </>
-//   );
-// };
-
-// export default App;
-
 // src/App.tsx
 import { useState } from "react";
 import { useCart } from "./context/CartContext";
@@ -75,14 +35,19 @@ const App = () => {
       {/* 체크아웃 모달 */}
       <CheckoutModal
         isOpen={isCheckoutOpen}
-        total={total} // ✅ total 전달 (오류 해결)
-        onConfirm={(paymentMethod) => {
-          console.log(`결제 완료! 선택된 결제 방법: ${paymentMethod}`);
+        total={total}
+        onConfirm={(paymentMethod, change) => {
+          console.log(`결제 완료!`);
+          console.log(`결제 방법: ${paymentMethod}`);
+          if (paymentMethod === "현금") {
+            console.log(`거스름돈: ${change ? change.toLocaleString() + "원" : "없음"}`);
+          }
           clearCart();
           setCheckoutOpen(false);
         }}
         onClose={() => setCheckoutOpen(false)}
       />
+      
     </>
   );
 };
