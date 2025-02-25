@@ -8,6 +8,8 @@ interface ResetModalProps {
 }
 
 const ResetModal = ({ isOpen, onConfirm, onClose }: ResetModalProps) => {
+  if (!isOpen) return null;
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <h2 className="text-lg font-bold">정말 초기화 하시겠습니까?</h2>

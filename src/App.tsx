@@ -1,18 +1,17 @@
 // // src/App.tsx
 // import { useState } from "react";
-// import { CartProvider, useCart } from "./context/CartContext";
+// import { useCart } from "./context/CartContext"; // ✅ useCart만 가져오기
 // import Header from "./components/Header";
 // import Cart from "./components/Cart";
 // import ProductGrid from "./components/ProductGrid";
 // import CheckoutModal from "./components/CheckoutModal";
 
 // const App = () => {
-//   // ✅ useState와 useCart를 함수 내부에서 선언해야 함!
 //   const [isCheckoutOpen, setCheckoutOpen] = useState(false);
-//   const { clearCart } = useCart(); 
+//   const { clearCart } = useCart(); // ✅ 이제 안전하게 사용 가능!
 
 //   return (
-//     <CartProvider> {/* ✅ 여기에서 감싸줌 */}
+//     <>
 //       <Header />
 //       <Cart />
 //       <ProductGrid 
@@ -33,7 +32,7 @@
 //         }}
 //         onClose={() => setCheckoutOpen(false)}
 //       />
-//     </CartProvider>
+//     </>
 //   );
 // };
 
@@ -41,28 +40,38 @@
 
 // src/App.tsx
 import { useState } from "react";
-import { useCart } from "./context/CartContext"; // ✅ useCart만 가져오기
+import { useCart } from "./context/CartContext";
 import Header from "./components/Header";
 import Cart from "./components/Cart";
 import ProductGrid from "./components/ProductGrid";
 import CheckoutModal from "./components/CheckoutModal";
+import ResetModal from "./components/ResetModal"; // ✅ 추가
 
 const App = () => {
   const [isCheckoutOpen, setCheckoutOpen] = useState(false);
-  const { clearCart } = useCart(); // ✅ 이제 안전하게 사용 가능!
+  const [isResetOpen, setResetOpen] = useState(false); // ✅ 초기화 모달 상태 추가
+  const { clearCart } = useCart();
 
   return (
     <>
       <Header />
       <Cart />
       <ProductGrid 
-        onReset={() => {
-          console.log("초기화 실행!"); // ✅ 디버깅 로그
-          clearCart(); 
-        }} 
+        onReset={() => setResetOpen(true)} // ✅ 초기화 버튼 클릭 시 모달 열기
         onCheckout={() => setCheckoutOpen(true)} 
       />
-      
+
+      {/* 초기화 확인 모달 */}
+      <ResetModal
+        isOpen={isResetOpen}
+        onConfirm={() => {
+          console.log("장바구니 초기화됨!");
+          clearCart(); // ✅ 장바구니 초기화
+          setResetOpen(false); // ✅ 모달 닫기
+        }}
+        onClose={() => setResetOpen(false)} // ✅ 취소 시 모달 닫기
+      />
+
       {/* 체크아웃 모달 */}
       <CheckoutModal
         isOpen={isCheckoutOpen}
