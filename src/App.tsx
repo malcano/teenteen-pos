@@ -34,7 +34,7 @@ const App = () => {
   const [isCheckoutOpen, setCheckoutOpen] = useState(false);
   const [isResetOpen, setResetOpen] = useState(false);
   const [isEditOpen, setEditOpen] = useState(false);
-  const { clearCart } = useCart();
+  const { clearCart, total } = useCart();
 
   // ✅ 상품 수정 후 `localStorage`에 저장
   useEffect(() => {
@@ -77,7 +77,7 @@ const App = () => {
       {/* ✅ 체크아웃 모달 */}
       <CheckoutModal
         isOpen={isCheckoutOpen}
-        total={0} 
+        total={total} 
         onConfirm={() => {
           clearCart();
           setCheckoutOpen(false);
