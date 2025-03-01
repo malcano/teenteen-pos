@@ -1,4 +1,3 @@
-// src/components/ProductGrid.tsx
 import { useCart } from "../context/CartContext";
 
 interface Product {
@@ -11,8 +10,10 @@ interface ProductGridProps {
   products: Product[];
   onReset: () => void;
   onCheckout: () => void;
+  onEdit: () => void; // ✅ 상품 편집 버튼 클릭 시 실행할 함수 추가
 }
-const ProductGrid = ({ products, onReset, onCheckout }: ProductGridProps) => {
+
+const ProductGrid = ({ products, onReset, onCheckout, onEdit }: ProductGridProps) => {
   const { addItem } = useCart();
 
   return (
@@ -23,12 +24,14 @@ const ProductGrid = ({ products, onReset, onCheckout }: ProductGridProps) => {
           let buttonLabel = product.name;
 
           if (product.id === 21) {
-            buttonClass = "p-4 text-white text-center bg-red-600 w-28"; // ✅ 초기화 버튼 (빨강, 크기 조정)
+            buttonClass = "p-4 text-white text-center bg-red-600 w-28"; // ✅ 초기화 버튼 (빨강)
             buttonLabel = "초기화";
-          }
-          if (product.id === 22) {
-            buttonClass = "p-4 text-white text-center bg-blue-500 w-28"; // ✅ 체크아웃 버튼 (파랑, 크기 조정)
+          } else if (product.id === 22) {
+            buttonClass = "p-4 text-white text-center bg-blue-500 w-28"; // ✅ 체크아웃 버튼 (파랑)
             buttonLabel = "체크아웃";
+          } else if (product.id === 23) {
+            buttonClass = "p-4 text-white text-center bg-green-500 w-28"; // ✅ 상품 편집 버튼 (초록)
+            buttonLabel = "상품 편집";
           }
 
           return (
@@ -39,6 +42,8 @@ const ProductGrid = ({ products, onReset, onCheckout }: ProductGridProps) => {
                   onReset();
                 } else if (product.id === 22) {
                   onCheckout();
+                } else if (product.id === 23) {
+                  onEdit(); // ✅ 23번 버튼 클릭 시 상품 편집 모달 실행
                 } else {
                   addItem({ ...product, quantity: 1 });
                 }
@@ -46,8 +51,10 @@ const ProductGrid = ({ products, onReset, onCheckout }: ProductGridProps) => {
               className={`${buttonClass} flex flex-col items-center justify-center h-24 w-28`} // ✅ 크기 조정
             >
               <span className="text-lg font-semibold">{buttonLabel}</span>
-              {product.id !== 21 && product.id !== 22 && (
-                <span className="text-sm text-gray-300 mt-2">{product.price.toLocaleString()}원</span> // ✅ 가격 아래 배치
+              {product.id < 21 && (
+                <span className="text-sm text-gray-300 mt-2">
+                  {product.price.toLocaleString()}원
+                </span>
               )}
             </button>
           );
@@ -56,93 +63,5 @@ const ProductGrid = ({ products, onReset, onCheckout }: ProductGridProps) => {
     </div>
   );
 };
-// const ProductGrid = ({ products, onReset, onCheckout }: ProductGridProps) => {
-//   const { addItem } = useCart();
-
-//   return (
-//     <div className="flex justify-end p-4 w-full"> {/* ✅ 상품 버튼을 우측 정렬 */}
-//       <div className="grid grid-cols-5 gap-"> {/* ✅ 간격 늘리기 */}
-//         {products.map((product) => {
-//           let buttonClass = "p-4 text-white text-center bg-gray-900"; // 기본 검정색
-//           let buttonLabel = product.name; // ✅ 기본적으로 상품 이름 사용
-
-//           if (product.id === 21) {
-//             buttonClass = "p-4 text-white text-center bg-red-600"; // ✅ 초기화 버튼 (빨강)
-//             buttonLabel = "초기화"; // ✅ 이름 고정
-//           }
-//           if (product.id === 22) {
-//             buttonClass = "p-4 text-white text-center bg-blue-500"; // ✅ 체크아웃 버튼 (파랑)
-//             buttonLabel = "체크아웃"; // ✅ 이름 고정
-//           }
-
-//           return (
-//             <button
-//               key={product.id}
-//               onClick={() => {
-//                 if (product.id === 21) {
-//                   onReset(); // ✅ 초기화 버튼 동작
-//                 } else if (product.id === 22) {
-//                   onCheckout(); // ✅ 체크아웃 버튼 동작
-//                 } else {
-//                   addItem({ ...product, quantity: 1 });
-//                 }
-//               }}
-//               className={`${buttonClass} flex flex-col items-center justify-center h-28 w-32`} // ✅ 버튼 크기 증가
-//             >
-//               <span className="text-lg font-semibold">{buttonLabel}</span>
-//               {product.id !== 21 && product.id !== 22 && (
-//                 <span className="text-sm text-gray-300 mt-1">{product.price.toLocaleString()}원</span>
-//               )}
-//             </button>
-//           );
-//         })}
-//       </div>
-//     </div>
-//   );
-// };
-// const ProductGrid = ({ products, onReset, onCheckout }: ProductGridProps) => {
-//   const { addItem } = useCart();
-
-//   return (
-//     <div className="flex justify-end p-4 w-full"> {/* ✅ 상품 버튼을 우측 정렬 */}
-//       <div className="grid grid-cols-5 gap-2">
-//         {products.map((product) => {
-//           let buttonClass = "p-4 text-white text-center bg-gray-900"; // 기본 검정색
-//           let buttonLabel = product.name; // ✅ 기본적으로 상품 이름 사용
-
-//           if (product.id === 21) {
-//             buttonClass = "p-4 text-white text-center bg-red-600"; // ✅ 초기화 버튼 (빨강)
-//             buttonLabel = "초기화"; // ✅ 이름 고정
-//           }
-//           if (product.id === 22) {
-//             buttonClass = "p-4 text-white text-center bg-blue-500"; // ✅ 체크아웃 버튼 (파랑)
-//             buttonLabel = "체크아웃"; // ✅ 이름 고정
-//           }
-
-//           return (
-//             <button
-//               key={product.id}
-//               onClick={() => {
-//                 if (product.id === 21) {
-//                   onReset(); // ✅ 초기화 버튼 동작
-//                 } else if (product.id === 22) {
-//                   onCheckout(); // ✅ 체크아웃 버튼 동작
-//                 } else {
-//                   addItem({ ...product, quantity: 1 });
-//                 }
-//               }}
-//               className={`${buttonClass} flex flex-col items-center justify-center h-24 w-24`}
-//             >
-//               <span className="text-lg font-semibold">{buttonLabel}</span>
-//               {product.id !== 21 && product.id !== 22 && (
-//                 <span className="text-sm text-gray-300 mt-1">{product.price.toLocaleString()}원</span>
-//               )}
-//             </button>
-//           );
-//         })}
-//       </div>
-//     </div>
-//   );
-// };
 
 export default ProductGrid;
