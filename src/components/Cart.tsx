@@ -38,10 +38,10 @@ const Cart = () => {
             <li key={item.id} className="flex justify-between items-center border-b py-2">
               <span className="flex-1">{item.name} ({item.price.toLocaleString()}원)</span>
               <div className="flex items-center space-x-2">
-                <button onClick={() => updateQuantity(item.id, -1)} className="px-3 py-1 bg-red-500 text-white rounded">-</button>
+                <button onClick={() => updateQuantity(item.id, -1)} className="px-3 py-1 bg-gray-500 text-white rounded">-</button>
                 <span className="text-lg">{item.quantity}</span>
-                <button onClick={() => updateQuantity(item.id, 1)} className="px-3 py-1 bg-green-500 text-white rounded">+</button>
-                <button onClick={() => removeItem(item.id)} className="px-3 py-1 bg-gray-500 text-white rounded">삭제</button>
+                <button onClick={() => updateQuantity(item.id, 1)} className="px-3 py-1 bg-gray-500 text-white rounded">+</button>
+                <button onClick={() => removeItem(item.id)} className="px-3 py-1 bg-red-500 text-white rounded">삭제</button>
               </div>
             </li>
           ))}
