@@ -69,7 +69,10 @@ const ProductGrid = ({ onReset, onCheckout }: { onReset: () => void; onCheckout:
             }}
             className={buttonClass} // ✅ Tailwind 클래스 적용
           >
-            {product.name}
+<span className="text-lg font-semibold">{product.name}</span> {/* ✅ 상품 이름 */}
+            {product.id !== 21 && product.id !== 22 && ( // ✅ 초기화 & 체크아웃 버튼에는 가격 제외
+              <span className="text-sm text-gray-300 mt-1"><br/>{product.price.toLocaleString()}원</span> // ✅ 가격 표시
+            )}
           </button>
         );
       })}
