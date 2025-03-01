@@ -4,7 +4,7 @@
 상품을 선택하고, 장바구니에 담고, 결제 및 초기화 기능을 수행할 수 있습니다.
 
 ## 🎯 **POS 시스템 UI 미리보기**
-![POS 시스템 화면](https://imgur.com/a/fDnj5YU)
+![POS 시스템 화면](https://i.imgur.com/VMqNfey.png)
 
 ### 🛠 기술 스택
 	•	Frontend: React, TypeScript, Tailwind CSS
