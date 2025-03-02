@@ -55,4 +55,11 @@ cd teenteen-pos-tsx
 npm install
 npm run dev
 ```
+
+만일 Error 발생 시 node 버전에 의한 것으로 아래 커맨드 실행
+```sh
+nvm install 20
+nvm use 20
+```
+
 브라우저에서 http://localhost:5173 로 접속하여 실행 가능
