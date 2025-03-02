@@ -6,6 +6,8 @@
 ## 🎯 **POS 시스템 UI 미리보기**
 ![POS 시스템 화면](https://i.imgur.com/VMqNfey.png)
 
+
+
 ### 🛠 기술 스택
 	•	Frontend: React, TypeScript, Tailwind CSS
 	•	State Management: Context API (CartContext.tsx)
@@ -63,3 +65,8 @@ nvm use 20
 ```
 
 브라우저에서 http://localhost:5173 로 접속하여 실행 가능
+
+
+## 추가 기능 (PWA 추가)
+다운로드 받아 오프라인에서 구동 가능
+https://teenteenpos.netlify.app/
