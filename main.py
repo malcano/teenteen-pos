@@ -1,6 +1,7 @@
 import os
 import json
 import pandas as pd
+import openpyxl
 
 # JSON 파일이 있는 폴더
 receipt_folder = "./receipt"
@@ -11,7 +12,7 @@ if not os.path.exists(receipt_folder):
     os.makedirs(receipt_folder)
     print(f"📂 '{receipt_folder}' 폴더가 생성되었습니다.")
 
-# 모든 JSON 파일 목록 가져오기
+# 모든 JSON 파일 목록 가져오기å
 json_files = [f for f in os.listdir(receipt_folder) if f.endswith(".json")]
 
 if not json_files:
