@@ -76,6 +76,19 @@ const CheckoutModal = ({ isOpen, total, onConfirm, onClose }: CheckoutModalProps
               />
               계좌이체
             </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="카드"
+                checked={paymentMethod === "카드"}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                className="mr-2"
+              />
+              카드
+            </label>
+
+
           </div>
         </div>
 
